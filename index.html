@@ -63,6 +63,50 @@
         <td>$7</td>
     </tr>
 </table>
+<hr>
+<h3>Fenwick Tree Algoritm</h3>
+
+<blockquote>
+    A Fenwick tree or binary indexed tree is a data structure that can efficiently update elements and calculate prefix sums in a table of numbers.
+    When compared with a flat array of numbers, the Fenwick tree achieves a much better balance between two operations: element update and prefix sum calculation.
+     A flat array of {\displaystyle n}n numbers can either store the elements or the prefix sums. In the first case, computing prefix sums requires linear time;
+      in the second case, updating the array elements requires linear time (in both cases, the other operation can be performed in constant time).
+       <a href="https://en.wikipedia.org/wiki/Fenwick_tree">For code.</a>
+    </blockquote>
+
+<pre>
+    struct FenwickTree {
+        vector<int> bit;  // binary indexed tree
+        int n;
+    
+        FenwickTree(int n) {
+            this->n = n;
+            bit.assign(n, 0);
+        }
+    
+        FenwickTree(vector<int> a) : FenwickTree(a.size()) {
+            for (size_t i = 0; i < a.size(); i++)
+                add(i, a[i]);
+        }
+    
+        int sum(int r) {
+            int ret = 0;
+            for (; r >= 0; r = (r & (r + 1)) - 1)
+                ret += bit[r];
+            return ret;
+        }
+    
+        int sum(int l, int r) {
+            return sum(r) - sum(l - 1);
+        }
+    
+        void add(int idx, int delta) {
+            for (; idx < n; idx = idx | (idx + 1))
+                bit[idx] += delta;
+        }
+    };
+</pre>
+
 <a href="aboutme.html" >About Marvel Man</a>
 </body>
 </html>
